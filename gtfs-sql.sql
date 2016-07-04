@@ -64,12 +64,14 @@ CREATE TABLE `fare_rules` (
 CREATE TABLE `feed_info` (
     id INT(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     transit_system VARCHAR(50) NOT NULL,
+    feed_id VARCHAR(100) NOT NULL,
     feed_publisher_name VARCHAR(100) NOT NULL,
     feed_publisher_url VARCHAR(255) NOT NULL,
     feed_lang VARCHAR(255) NOT NULL,
     feed_start_date VARCHAR(8),
     feed_end_date VARCHAR(8),
-    feed_version VARCHAR(100)
+    feed_version VARCHAR(100),
+    KEY `feed_id` (feed_id)
 );
 
 CREATE TABLE `frequencies` (
@@ -124,6 +126,7 @@ CREATE TABLE `stop_times` (
     shape_dist_traveled VARCHAR(50),
     timepoint TINYINT(1), #null/empty for times considered exact, 0 for times
     # considered approximate, 1 for times considered exact
+    fare_units_traveled VARCHAR(50),
     KEY `trip_id` (trip_id),
     KEY `stop_id` (stop_id),
     KEY `stop_sequence` (stop_sequence),
@@ -146,6 +149,7 @@ CREATE TABLE `stops` (
     parent_station VARCHAR(100),
     stop_timezone VARCHAR(50),
     wheelchair_boarding TINYINT(1),
+    platform_code VARCHAR(2),
     KEY `zone_id` (zone_id),
     KEY `stop_lat` (stop_lat),
     KEY `stop_lon` (stop_lon),
@@ -170,6 +174,7 @@ CREATE TABLE `trips` (
     trip_id VARCHAR(255) NOT NULL,
     trip_headsign VARCHAR(255),
     trip_short_name VARCHAR(255),
+    trip_long_name VARCHAR(255),
     direction_id TINYINT(1), #0 for one direction, 1 for another.
     block_id VARCHAR(11),
     shape_id VARCHAR(11),
